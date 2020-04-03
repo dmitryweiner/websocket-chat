@@ -3,6 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Websocket chat</title>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .main-container {
+            display: flex;
+            flex-flow: column;
+            height: 100%;
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .messages-container {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            min-height: 0px;
+        }
+
+        .messages-container .nick {
+            color: #DCDFE6;
+            font-style: italic;
+        }
+
+        .messages-container .msg {
+            margin-left: 1%;
+        }
+        .messages-container .message {
+            padding: 10px 15px;
+            margin-bottom: 1%;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+        }
+
+        .form-container form {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+        }
+
+        .form-container form  * {
+            width: calc(100% - 10px);
+            margin: 5px;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+        }
+    </style>
 </head>
 <body>
 <script type="application/javascript">
@@ -38,8 +87,9 @@
     function displayMessage(newMessage) {
         const message = JSON.parse(newMessage);
         const messagesHolder = document.getElementById("messages");
-        const messageHTML = "<b>" + message.nick + ":</b> " + message.message + "<br/>";
+        const messageHTML = `<div class="message"><span class="nick">${message.nick}:</span> <span class="msg">${message.message}</span></div>`;
         messagesHolder.innerHTML += messageHTML;
+        messagesHolder.scrollIntoView(false);
     }
 
     function sendMessage() {
@@ -57,12 +107,19 @@
         message.value = "";
     }
 </script>
-<div id="messages">
+<div class="main-container">
+    <div class="messages-container">
+        <div id="messages">
+        </div>
+    </div>
+    <div class="form-container">
+        <form>
+            <input type="text" id="nick"/><br>
+            <textarea id="message"></textarea>
+            <br/>
+            <input type="button" value="Send" onclick="sendMessage()">
+        </form>
+    </div>
 </div>
-<form>
-    <input type="text" id="nick"/><br>
-    <textarea id="message"></textarea>
-    <input type="button" value="Send" onclick="sendMessage()">
-</form>
 </body>
 </html>
