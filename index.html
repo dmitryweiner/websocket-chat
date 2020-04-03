@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Websocket chat</title>
+</head>
+<body>
+<script type="application/javascript">
+    const apiUrl = "ws://localhost:1337";
+
+    const socket = new WebSocket(apiUrl);
+    let isConnected = false;
+
+    socket.onopen = function() {
+        isConnected = true;
+        console.log("Соединение установлено.");
+    };
+
+    socket.onclose = function(event) {
+        if (event.wasClean) {
+            console.log('Соединение закрыто чисто');
+        } else {
+            console.log('Обрыв соединения'); // например, "убит" процесс сервера
+        }
+        console.log('Код: ' + event.code + ' причина: ' + event.reason);
+        isConnected = false;
+    };
+
+    socket.onmessage = function(event) {
+        console.log("Получены данные " + event.data);
+        displayMessage(event.data);
+    };
+
+    socket.onerror = function(error) {
+        console.log("Ошибка " + error.message);
+    };
+
+    function displayMessage(newMessage) {
+        const message = JSON.parse(newMessage);
+        const messagesHolder = document.getElementById("messages");
+        const messageHTML = "<b>" + message.nick + ":</b> " + message.message + "<br/>";
+        messagesHolder.innerHTML += messageHTML;
+    }
+
+    function sendMessage() {
+        if (!isConnected) {
+            return false;
+        }
+
+        const message = document.getElementById("message");
+        const nick = document.getElementById("nick");
+        const data = {
+            message: message.value,
+            nick: nick.value
+        };
+        socket.send(JSON.stringify(data));
+        message.value = "";
+    }
+</script>
+<div id="messages">
+</div>
+<form>
+    <input type="text" id="nick"/><br>
+    <textarea id="message"></textarea>
+    <input type="button" value="Send" onclick="sendMessage()">
+</form>
+</body>
+</html>
