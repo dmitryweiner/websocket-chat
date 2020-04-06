@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Websocket chat</title>
     <style type="text/css">
         html, body {
@@ -38,6 +39,10 @@
             border: 1px solid #dcdfe6;
         }
 
+        .form-container {
+            margin: 20px;
+        }
+
         .form-container form {
             width: 100%;
             padding: 10px;
@@ -50,6 +55,15 @@
             margin: 5px;
             border-radius: 4px;
             border: 1px solid #dcdfe6;
+        }
+
+        .form-container form  input[type="text"] {
+            height: 25px;
+        }
+
+        .form-container form  input[type="button"] {
+            height: 25px;
+            background-color: lightgray;
         }
     </style>
 </head>
@@ -115,7 +129,7 @@
     <div class="form-container">
         <form>
             <input type="text" id="nick"/><br>
-            <textarea id="message"></textarea>
+            <textarea id="message" rows="4"></textarea>
             <br/>
             <input type="button" value="Send" onclick="sendMessage()">
         </form>
