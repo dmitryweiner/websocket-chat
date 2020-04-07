@@ -18,6 +18,13 @@
             margin: 0 auto;
         }
 
+        @media only screen and (max-width: 800px) {
+            .main-container {
+                width: 100%;
+                margin: 0;
+            }
+        }
+
         .messages-container {
             flex: 1 1 auto;
             overflow-y: auto;
@@ -43,11 +50,23 @@
             margin: 20px;
         }
 
+        @media only screen and (max-width: 800px) {
+            .form-container {
+                margin: 0;
+            }
+        }
+
         .form-container form {
             width: 100%;
             padding: 10px;
             border-radius: 4px;
             border: 1px solid #dcdfe6;
+        }
+
+        @media only screen and (max-width: 800px) {
+            .form-container form {
+                width: auto;
+            }
         }
 
         .form-container form  * {
